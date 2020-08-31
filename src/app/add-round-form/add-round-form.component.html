@@ -1,0 +1,56 @@
+<form [formGroup]="addRoundForm">
+  <table>
+    <tr>
+      <td>Round {{roundNumber}}</td>
+      <td>
+        <mat-radio-group aria-label="Select an option" formControlName="role">
+          <mat-radio-button value="attack">Attack</mat-radio-button>
+          <mat-radio-button value="defense">Defense</mat-radio-button>
+        </mat-radio-group>
+      </td>
+      <td>
+        <mat-form-field>
+          <mat-label>{{ selectedMap }} Sites</mat-label>
+          <mat-select formControlName="site">
+            <mat-option *ngFor="let site of sites" [value]="site.id">
+              {{site.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <mat-label>Kills</mat-label>
+          <input type="number" matInput maxlength="3" placeholder="0" formControlName="kills">
+        </mat-form-field>
+      </td><td>
+        <mat-form-field>
+          <mat-label>Deaths</mat-label>
+          <input type="number" matInput maxlength="3" placeholder="0" formControlName="deaths">
+        </mat-form-field>
+      </td><td>
+        <mat-form-field>
+          <mat-label>Assists</mat-label>
+          <input type="number" matInput maxlength="3" placeholder="0" formControlName="assists">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <mat-label>Result</mat-label>
+          <mat-select formControlName="result">
+            <mat-option [value]="'win'">
+              Win
+            </mat-option>
+            <mat-option [value]="'loss'">
+              Loss
+            </mat-option>
+            <mat-option [value]="'draw'">
+              Draw
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+  <button mat-raised-button color="primary" (click)="onClick()">Results</button>
+</form>

@@ -1,0 +1,123 @@
+<h4>Basic mat-select</h4>
+<form [formGroup]="addMatchForm" (ngSubmit)="onFormSubmit(addMatchForm.value)">
+  <mat-form-field>
+    <mat-label>Maps</mat-label>
+    <mat-select formControlName="map" (selectionChange)="getSites($event)" >
+      <mat-option *ngFor="let map of maps" [value]="map">
+        {{map.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div formArrayName="rounds"
+       *ngFor="let round of addMatchForm.value.rounds let i = index;">
+    <table [formGroupName]="i">
+      <tr>
+        <td>Round {{i+1}}</td>
+        <td>
+          <mat-radio-group aria-label="Select an option" formControlName="role">
+            <mat-radio-button value="attack">Attack</mat-radio-button>
+            <mat-radio-button value="defense">Defense</mat-radio-button>
+          </mat-radio-group>
+        </td>
+        <td>
+          <mat-form-field>
+            <mat-label>{{ selectedMap }} Sites</mat-label>
+            <mat-select formControlName="site">
+              <mat-option *ngFor="let site of sites" [value]="site.id">
+                {{site.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <mat-label>Kills</mat-label>
+            <input type="number" matInput maxlength="3" placeholder="0" formControlName="kills">
+          </mat-form-field>
+        </td><td>
+        <mat-form-field>
+          <mat-label>Deaths</mat-label>
+          <input type="number" matInput maxlength="3" placeholder="0" formControlName="deaths">
+        </mat-form-field>
+      </td><td>
+        <mat-form-field>
+          <mat-label>Assists</mat-label>
+          <input type="number" matInput maxlength="3" placeholder="0" formControlName="assists">
+        </mat-form-field>
+      </td>
+        <td>
+          <mat-form-field>
+            <mat-label>Result</mat-label>
+            <mat-select formControlName="result">
+              <mat-option [value]="'win'">
+                Win
+              </mat-option>
+              <mat-option [value]="'loss'">
+                Loss
+              </mat-option>
+              <mat-option [value]="'draw'">
+                Draw
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+<!--  <div *ngIf="selectedMap" formArrayName="rounds">-->
+<!--    <app-add-round-form-->
+<!--      *ngFor="let round of rounds; let i = index"-->
+<!--      [roundNumber]="i + 1"-->
+<!--      [selectedMap]="selectedMap.name"-->
+<!--      [attackers]="attackers"-->
+<!--      [defenders]="defenders"-->
+<!--      [sites]="sites">-->
+<!--    </app-add-round-form>-->
+<!--    <button mat-raised-button color="primary" (click)="addRound()">Add Round</button>-->
+<!--  </div>-->
+<!--  <table *ngIf="selectedMap">-->
+<!--    <tr formArrayName="rounds" *ngFor="let round of rounds; let i=index">-->
+<!--      <td>Round {{i + 1}}</td>-->
+<!--      <td>-->
+<!--        <mat-form-field *ngIf="selectedMap && role">-->
+<!--        <mat-label>{{ selectedMap.name }} Sites</mat-label>-->
+<!--        <mat-select [formControlName]="round.site">-->
+<!--          <mat-option *ngFor="let site of sites" [value]="site.id">-->
+<!--            {{site.name}}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+<!--        </mat-form-field>-->
+<!--      </td>-->
+<!--      <td *ngIf="round.site"></td>-->
+<!--      <input [id]="round.id" type="checkbox"-->
+<!--             [formControl]="demoArray[i]">-->
+<!--      <label [for]="arrayItem.id" class="array-item-title">-->
+<!--        {{arrayItem.title}}</label>-->
+
+<!--    </tr>-->
+<!--  </table>-->
+
+<!--<table *ngIf="selectedMap">-->
+<!--  <tr *ngFor="let round of rounds">-->
+<!--    <td>Round {{rounds.indexOf(round) + 1}}</td>-->
+<!--    <td>-->
+<!--      <mat-radio-group aria-label="Select an option"-->
+<!--      [ngModel]="role">-->
+<!--        <mat-radio-button value="attack">Attack</mat-radio-button>-->
+<!--        <mat-radio-button value="defense">Defense</mat-radio-button>-->
+<!--      </mat-radio-group>-->
+<!--    </td>-->
+<!--    <td>-->
+<!--      <mat-form-field *ngIf="selectedMap && role">-->
+<!--        <mat-label>{{ selectedMap.name }} Sites</mat-label>-->
+<!--        <mat-select >-->
+<!--          <mat-option *ngFor="let site of sites" [value]="site.id">-->
+<!--            {{site.name}}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+<!--    </td>-->
+<!--  </tr>-->
+<!--</table>-->
+</form>

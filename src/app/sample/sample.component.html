@@ -1,0 +1,78 @@
+<form [formGroup]="matchForm" fxLayout="column" fxLayout.lt-md="column" class="parent-form">
+  <h1 style="margin: auto; text-align: center">Record a Match</h1>
+  <mat-form-field class="map-input">
+    <mat-label>Maps</mat-label>
+    <mat-select formControlName="map" (selectionChange)="getSites($event)" >
+      <mat-option *ngFor="let map of maps" [value]="map">
+        {{map.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+<div formArrayName="rounds"
+     *ngFor="let round of matchForm.get('rounds')['controls']; let i = index;">
+  <div [formGroupName]="i">
+    <h2>Round {{i+1}}</h2>
+    <mat-radio-group aria-label="Select an option" formControlName="role">
+      <mat-radio-button value="attack">Attack</mat-radio-button>
+      <mat-radio-button value="defense">Defense</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field>
+      <mat-label>{{ selectedMap }} Sites</mat-label>
+      <mat-select formControlName="site">
+        <mat-option *ngFor="let site of sites" [value]="site.id">
+          {{site.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="round.controls.role.value === 'attack'">
+      <mat-label>Attackers</mat-label>
+      <mat-select formControlName="operator">
+        <mat-option *ngFor="let attacker of attackers" [value]="attacker.id">
+          {{attacker.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="round.controls.role.value === 'defense'">
+      <mat-label>Defenders</mat-label>
+      <mat-select formControlName="operator">
+        <mat-option *ngFor="let defender of defenders" [value]="defender.id">
+          {{defender.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Kills</mat-label>
+      <input type="number" matInput maxlength="3" placeholder="0" formControlName="kills">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Deaths</mat-label>
+      <input type="number" matInput maxlength="3" placeholder="0" formControlName="deaths">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Assists</mat-label>
+      <input type="number" matInput maxlength="3" placeholder="0" formControlName="assists">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Result</mat-label>
+      <mat-select formControlName="result">
+        <mat-option [value]="'win'">
+          Win
+        </mat-option>
+        <mat-option [value]="'loss'">
+          Loss
+        </mat-option>
+        <mat-option [value]="'draw'">
+          Draw
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+
+</form>
+<div *ngIf="!buttonsHidden" fxLayout="column">
+  <button mat-raised-button color="primary" (click)="addRound()">Add Round</button>
+  <button mat-raised-button color="warn" (click)="removeRound()">Remove Round</button>
+  <button mat-raised-button color="primary" (click)="testAPI()">Submit</button>
+</div>
